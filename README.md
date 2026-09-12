@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/makrron/umbrel-community-app-store/master/makrron-overleaf/icon.svg" width="96" height="96" alt="Makrron Community App Store" />
-</p>
-
 <h1 align="center">Makrron App Store</h1>
 
 <p align="center">
