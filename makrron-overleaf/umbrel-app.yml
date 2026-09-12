@@ -13,6 +13,11 @@ description: >-
   After launching Overleaf for the first time, navigate to `/launchpad` in your browser to create your initial administrator account.
 
 
+  ### TeX Live Packages
+
+  The official image comes with a minimal TeX Live installation. To install extra packages (such as `babel-spanish`, `titlesec`, or `scheme-full`), open the app terminal in Umbrel Settings and use `tlmgr`. See repository README for detailed commands.
+
+
   ### Key Features
 
   - Real-time collaborative document editing
