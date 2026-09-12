@@ -15,31 +15,36 @@ services:
       redis:
         condition: service_started
     volumes:
-      - ${APP_DATA_DIR}/data/sharelatex:/var/lib/sharelatex
+      - ${APP_DATA_DIR}/data/overleaf:/var/lib/overleaf
     environment:
-      SHARELATEX_APP_NAME: Overleaf Community Edition
-      SHARELATEX_SITE_URL: http://${DEVICE_DOMAIN_NAME}:${APP_PROXY_PORT}
-      SHARELATEX_NAV_TITLE: Overleaf
-      SHARELATEX_MONGO_URL: mongodb://makrron-overleaf_mongo_1:27017/sharelatex
-      SHARELATEX_REDIS_HOST: makrron-overleaf_redis_1
+      OVERLEAF_APP_NAME: Overleaf Community Edition
+      OVERLEAF_SITE_URL: http://${DEVICE_DOMAIN_NAME}:${APP_PROXY_PORT}
+      OVERLEAF_NAV_TITLE: Overleaf
+      OVERLEAF_MONGO_URL: mongodb://makrron-overleaf_mongo_1:27017/sharelatex?replicaSet=rs
+      OVERLEAF_REDIS_HOST: makrron-overleaf_redis_1
+      OVERLEAF_REDIS_PORT: 6379
       REDIS_HOST: makrron-overleaf_redis_1
+      REDIS_PORT: 6379
       ENABLED_LINKED_FILE_TYPES: 'project_file,project_output_file'
       ENABLE_CONVERSIONS: 'true'
       EMAIL_CONFIRMATION_DISABLED: 'true'
-      TEXMFVAR: /var/lib/sharelatex/tmp/texmf-var
+      TEXMFVAR: /var/lib/overleaf/tmp/texmf-var
       OVERLEAF_BEHIND_PROXY: 'true'
       OVERLEAF_INVITE_TOKEN_SECRET: ${APP_MAKRRON_OVERLEAF_INVITE_SECRET}
 
   mongo:
-    image: mongo:6.0@sha256:8b6d8f5bbedb25cb73517b65cf99f13aeb75ad5b157a56c479287a840bbad3ac
+    image: mongo:8.0@sha256:4a0f30875898413139bec44c73c02a05fed172578de65b644dcdcee143ae7306
     restart: on-failure
+    command: ["--replSet", "rs", "--bind_ip_all", "--port", "27017"]
     volumes:
       - ${APP_DATA_DIR}/data/mongo:/data/db
     healthcheck:
-      test: echo 'db.stats().ok' | mongosh localhost:27017/test --quiet
+      test: >
+        echo "try { rs.status() } catch (err) { rs.initiate({ _id: 'rs', members: [{ _id: 0, host: 'makrron-overleaf_mongo_1:27017' }] }) }"
+        | mongosh --port 27017 --quiet
       interval: 10s
-      timeout: 10s
-      retries: 5
+      timeout: 30s
+      retries: 30
 
   redis:
     image: redis:7.2-alpine@sha256:ccd6aa8d45ff3f033d6fa15b8cc1a50579f65c89f38cf9bb607a954c4f2128ed
