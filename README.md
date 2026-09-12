@@ -1,10 +1,11 @@
 # Makrron Umbrel Community App Store
 
-Community App Store for umbrelOS featuring custom self-hosted applications.
+Community App Store for umbrelOS featuring custom and updated self-hosted applications.
 
 ## Apps Available
 
 * **Overleaf (Community Edition)**: Collaborative cloud-based LaTeX editor for writing, editing, and publishing scientific documents.
+* **SimpleTorrent (v1.4.0)**: Modernized fork of SimpleTorrent with updated scrapers, multi-arch support, and direct integration with Umbrel's shared Downloads folder.
 
 ## How to Install in Umbrel
 

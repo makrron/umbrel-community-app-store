@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: makrron-simple-torrent_server_1
+      APP_PORT: 8086
+
+  server:
+    image: makrron/simple-torrent:1.4.0@sha256:c1e8c4722ad0a5c60c876ca0c6cd9fa5891df101fe274cedb736957484b8f0de
+    user: "1000:1000"
+    restart: on-failure
+    command: >
+      --port=8086
+      --config-path /config/simple-torrent.json
+    volumes:
+      - ${APP_DATA_DIR}/data/torrents:/torrents
+      - ${UMBREL_ROOT}/data/storage/downloads:/downloads
+      - ${APP_DATA_DIR}/data/config:/config

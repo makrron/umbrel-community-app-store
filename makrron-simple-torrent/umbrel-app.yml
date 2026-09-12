@@ -1,0 +1,60 @@
+manifestVersion: 1.1
+id: makrron-simple-torrent
+category: networking
+name: SimpleTorrent
+version: "1.4.0"
+tagline: Download torrents with your Umbrel
+description: >-
+  SimpleTorrent is a self-hosted remote torrent client that starts
+  torrents remotely, download sets of files on your Umbrel, which are then
+  retrievable or streamable via web browser over HTTP. This project is a
+  re-branded fork of cloud-torrent by jpillora. Features:
+
+
+  - Individual file download control
+
+  - Run external program on tasks completion: DoneCmd
+
+  - Stops task when seeding ratio reached: SeedRatio
+
+  - Download/Upload speed limiter: UploadRate/DownloadRate
+
+  - Detailed transfer stats in web UI.
+
+  - Torrent Watcher
+
+  - Extra trackers from external source
+
+  - Protocol Handler to magnet:
+
+  - Magnet RSS subscribing supported
+
+
+  ⚠️ SimpleTorrent downloads torrents over the Clearnet, not Tor.
+releaseNotes: >-
+  - Upgraded SimpleTorrent to v1.4.0 with modernized Go engine and native multi-arch container support.
+
+
+  - Overhauled built-in torrent search engine with modular providers, automatic mirror failovers, and updated scrapers (YTS, 1337X, The Pirate Bay, LimeTorrents, Nyaa, TorrentGalaxy, and more).
+
+
+  - Added clearer error feedback and transparent logging for upstream provider status.
+
+
+  - Full release notes: https://github.com/makrron/simple-torrent/releases/tag/v1.4.0
+developer: Preston & makrron
+website: https://github.com/makrron/simple-torrent
+dependencies: []
+repo: https://github.com/makrron/simple-torrent
+support: https://github.com/makrron/simple-torrent/issues
+port: 8086
+gallery: []
+path: ""
+icon: https://raw.githubusercontent.com/makrron/umbrel-community-app-store/master/makrron-simple-torrent/icon.svg
+defaultUsername: ""
+defaultPassword: ""
+torOnly: false
+permissions:
+  - STORAGE_DOWNLOADS
+submitter: makrron
+submission: https://github.com/makrron/umbrel-community-app-store
