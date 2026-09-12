@@ -1,68 +1,121 @@
-# Makrron Umbrel Community App Store
+<p align="center">
+  <img src="https://raw.githubusercontent.com/makrron/umbrel-community-app-store/master/makrron-overleaf/icon.svg" width="96" height="96" alt="Makrron Community App Store" />
+</p>
 
-Community App Store for umbrelOS featuring custom and updated self-hosted applications.
+<h1 align="center">Makrron App Store</h1>
 
-## Apps Available
+<p align="center">
+  A curated collection of community-packaged, self-hosted applications for <b>umbrelOS</b>.
+</p>
 
-* **Overleaf (Community Edition)**: Collaborative cloud-based LaTeX editor for writing, editing, and publishing scientific documents.
-* **SimpleTorrent (v1.4.0)**: Modernized fork of SimpleTorrent with updated scrapers, multi-arch support, and direct integration with Umbrel's shared Downloads folder.
+<p align="center">
+  <a href="https://umbrel.com"><img src="https://img.shields.io/badge/umbrelOS-Compatible-5351FB?style=flat-square&logo=linux" alt="umbrelOS Compatible" /></a>
+  <a href="https://github.com/makrron/umbrel-community-app-store"><img src="https://img.shields.io/badge/Apps-2%20Available-brightgreen?style=flat-square" alt="Available Apps" /></a>
+  <a href="https://github.com/makrron/umbrel-community-app-store/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License" /></a>
+</p>
 
-## How to Install in Umbrel
+---
 
-1. Open your Umbrel dashboard.
-2. Go to the **App Store**.
-3. Click the settings icon in the top-right corner -> **Community App Stores**.
-4. Add the repository URL:
+## 📦 Available Applications
+
+| App | Description | Category | Port | Architecture |
+| :--- | :--- | :--- | :--- | :--- |
+| <img src="https://raw.githubusercontent.com/makrron/umbrel-community-app-store/master/makrron-overleaf/icon.svg" width="32" height="32" valign="middle" /> **Overleaf** | Collaborative real-time LaTeX editor with instant PDF preview | `Developer` | `8185` | ![x86_64](https://img.shields.io/badge/arch-x86__64-informational?style=flat-square) |
+| <img src="https://raw.githubusercontent.com/makrron/umbrel-community-app-store/master/makrron-simple-torrent/icon.svg" width="32" height="32" valign="middle" /> **SimpleTorrent** | Fast torrent client with modernized scrapers & shared downloads | `Networking` | `8086` | ![multi-arch](https://img.shields.io/badge/arch-multi--arch-success?style=flat-square) |
+
+---
+
+## 🚀 How to Install in Umbrel
+
+Adding this Community App Store to your Umbrel server takes just a few seconds:
+
+1. Open your Umbrel dashboard in your browser (`http://umbrel.local` or your server IP).
+2. Open the **App Store**.
+3. Click on the **Settings** icon in the top-right corner $\rightarrow$ select **Community App Stores**.
+4. Paste the repository URL:
    ```text
    https://github.com/makrron/umbrel-community-app-store
    ```
-5. Click **Add**. You will now see the **Makrron App Store** in your App Store catalog!
+5. Click **Add**.
 
-## Overleaf (Community Edition) Guide
+The **Makrron App Store** will now appear in your App Store catalog, and its apps will be available to install with a single click.
 
-### 1. First-time Setup
-After installing Overleaf:
-1. Open the app from your Umbrel dashboard or navigate to `http://<umbrel-ip>:8185/launchpad`.
-2. Follow the prompt on `/launchpad` to create your initial admin user.
-3. Start creating and compiling your LaTeX documents!
+---
 
-### 2. Installing TeX Live Packages (Fix Missing Packages)
-By default, the official Overleaf Docker image includes a minimal TeX Live installation. If your documents require extra packages (such as `babel-spanish`, `titlesec`, etc.), you can install them using the terminal:
+## 📚 Application Guides
 
-1. Access the Overleaf container terminal from the Umbrel web UI:
-   * Navigate in your browser to:
-     ```text
-     http://<umbrel-ip>/settings/terminal/app/makrron-overleaf
-     ```
-   * Or if you connect via SSH to your Umbrel host, open a shell in the container with:
+### 📄 Overleaf (Community Edition)
+
+Overleaf Community Edition is a self-hosted, web-based collaborative LaTeX editor tailored for writing, editing, and compiling scientific documents.
+
+#### 🔑 First-Time Administrator Setup
+1. Launch Overleaf after installation or navigate to:
+   ```text
+   http://<umbrel-ip>:8185/launchpad
+   ```
+2. Follow the prompt to create your primary administrator account.
+
+#### 🧩 Installing Additional TeX Live Packages
+To keep the initial container size lightweight, Overleaf ships with a minimal TeX Live installation. When compiling documents that rely on packages like `babel-spanish`, `titlesec`, or extra fonts, install them using `tlmgr`:
+
+1. **Access the container terminal:**
+   * Via the Umbrel UI: `http://<umbrel-ip>/settings/terminal/app/makrron-overleaf`
+   * Or via SSH on your host:
      ```bash
      docker exec -it makrron-overleaf_server_1 bash
      ```
 
-2. Inside the container, run the package manager:
-   * **Update TeX Live package manager:**
-     ```bash
-     tlmgr update --self
-     ```
-   * **Option A: Install specific packages (e.g. Spanish language & titlesec):**
-     ```bash
-     tlmgr install babel-spanish titlesec
-     tlmgr path add
-     ```
-   * **Option B: Install recommended collections (popular packages & languages):**
-     ```bash
-     tlmgr install collection-latexextra collection-langspanish
-     tlmgr path add
-     ```
-   * **Option C: Install the complete TeX Live distribution (scheme-full, ~4–5 GB):**
-     ```bash
-     tlmgr install scheme-full
-     tlmgr path add
-     ```
+2. **Run `tlmgr` inside the container:**
+   ```bash
+   # Update package manager
+   tlmgr update --self
 
-### 3. Persist Installed Packages Across Container Recreations
-In Docker, container filesystem changes are lost if the container is recreated or updated. To permanently preserve the installed packages across restarts or app reinstalls, run on your host server terminal:
-```bash
-docker commit makrron-overleaf_server_1 sharelatex/sharelatex:6.3.0
-```
-This updates your local Docker image with the installed packages, ensuring they persist permanently.
+   # Option A: Install specific packages (e.g. Spanish language & titlesec)
+   tlmgr install babel-spanish titlesec
+   tlmgr path add
+
+   # Option B: Install recommended collections (common math, fonts & language packs)
+   tlmgr install collection-latexextra collection-langspanish
+   tlmgr path add
+
+   # Option C: Install full TeX Live distribution (~4-5 GB, includes all packages)
+   tlmgr install scheme-full
+   tlmgr path add
+   ```
+
+3. **Persist installed packages across container restarts:**
+   Run the following on your host machine terminal to freeze the packages into your local Docker image:
+   ```bash
+   docker commit makrron-overleaf_server_1 sharelatex/sharelatex:6.3.0
+   ```
+
+---
+
+### ⚡ SimpleTorrent (v1.4.0)
+
+A lightweight remote torrent client with a web interface, built on a modernized Go engine.
+
+* **Shared Storage**: Integrated directly with Umbrel's shared Downloads folder (`${UMBREL_ROOT}/data/storage/downloads`), enabling instant access from media servers like Jellyfin, Plex, and File Browser.
+* **Overhauled Search**: Enhanced torrent search engine with modular scrapers and automated mirror failovers (1337x, The Pirate Bay, LimeTorrents, YTS, Nyaa, TorrentGalaxy).
+* **Multi-Arch Native**: Prebuilt native support for `amd64` (x86_64) and `arm64` (Raspberry Pi 4/5, Umbrel Home).
+
+---
+
+## 🛠️ Requirements & Compatibility
+
+* **umbrelOS**: 1.0 or newer (tested on 1.3+)
+* **Architecture**:
+  * **Overleaf**: Intel/AMD (`x86_64`)
+  * **SimpleTorrent**: Intel/AMD (`x86_64`) and ARM64 (`aarch64`)
+
+---
+
+## 🤝 Contributing
+
+Issues, feature requests, and pull requests are welcome! If you'd like to suggest an app to be packaged or report a bug, please [open an issue](https://github.com/makrron/umbrel-community-app-store/issues).
+
+---
+
+<p align="center">
+  <sub>Maintained by <a href="https://github.com/makrron">@makrron</a> • Built for the Umbrel community</sub>
+</p>
