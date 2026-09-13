@@ -1,35 +1,48 @@
-manifestVersion: 1
+manifestVersion: 1.1
 id: makrron-overleaf
 category: developer
 name: Overleaf
 version: "6.3.0"
-tagline: Collaborative cloud-based LaTeX editor
+tagline: Collaborative self-hosted LaTeX editor
 description: >-
-  Overleaf (Community Edition) is a collaborative cloud-based LaTeX editor used for writing, editing, and publishing scientific and technical documents.
+  Overleaf (Community Edition) is a powerful self-hosted, collaborative online LaTeX editor designed to make scientific, academic, and technical writing seamless. Author papers, thesis projects, and presentations with real-time compilation, dual editing modes, and direct local storage on your Umbrel.
 
 
-  ### First-time Setup
+  ### ✨ Key Features
 
-  After launching Overleaf for the first time, navigate to `/launchpad` in your browser to create your initial administrator account.
+  - **Real-Time Collaboration**: Work simultaneously with colleagues and co-authors on the same document.
+
+  - **Instant PDF Preview**: Side-by-side LaTeX compilation to inspect results as you type.
+
+  - **Dual Editor Modes**: Effortlessly switch between visual Rich Text mode and direct LaTeX source code.
+
+  - **Project Management**: Organize chapters, images, and BibTeX bibliographies in an integrated file tree.
+
+  - **100% Private & Self-Hosted**: All documents and assets remain under your control on your Umbrel server.
 
 
-  ### TeX Live Packages
+  ### 🛠️ First-Time Setup
 
-  The official image comes with a minimal TeX Live installation. To install extra packages (such as `babel-spanish`, `titlesec`, or `scheme-full`), open the app terminal in Umbrel Settings and use `tlmgr`. See repository README for detailed commands.
+  After launching Overleaf for the first time, navigate to `/launchpad` in your browser (e.g. `http://<umbrel-ip>:8185/launchpad`) to create your primary administrator account.
 
 
-  ### Key Features
+  ### 📦 TeX Live Packages & Extras
 
-  - Real-time collaborative document editing
+  The Community Edition container ships with a minimal TeX Live installation for fast startup and low resource consumption. If your templates require additional packages (such as `babel-spanish`, `titlesec`, `amsmath`, or `scheme-full`):
 
-  - Direct LaTeX compilation with instant PDF preview
+  1. Open the app terminal in **Umbrel Settings > Terminal**, or run via SSH: `docker exec -it makrron-overleaf_server_1 bash`
 
-  - Rich text and source view modes
+  2. Update the package manager: `tlmgr update --self`
 
-  - Document history and version comparison
+  3. Install desired packages: `tlmgr install <package-name>` followed by `tlmgr path add`
 
-  - Project file and asset management
+  *(Tip: To persist newly installed packages across container updates, commit the image with `docker commit makrron-overleaf_server_1 sharelatex/sharelatex:6.3.0`)*
+releaseNotes: >-
+  - Overleaf Community Edition v6.3.0 on Umbrel.
 
+  - Modernized app icon with official Overleaf branding, solid background, and balanced geometry.
+
+  - Enhanced app store description with detailed setup and TeX Live package management instructions.
 developer: Overleaf
 website: https://www.overleaf.com
 dependencies: []
