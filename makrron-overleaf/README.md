@@ -1,6 +1,6 @@
 # Overleaf (Community Edition) on Umbrel
 
-Collaborative cloud-based LaTeX editor for writing, editing, and publishing scientific documents.
+Collaborative self-hosted LaTeX editor for writing, editing, and publishing scientific documents.
 
 ## First-time Setup
 1. Open the app from your Umbrel dashboard or navigate to `http://<umbrel-ip>:8185/launchpad`.
