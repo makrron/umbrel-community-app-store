@@ -4,7 +4,7 @@ storage:
   dataRoot: data
 category: developer
 name: Overleaf
-version: "6.3.0-patch.1"
+version: "6.3.0-patch.2"
 tagline: Collaborative self-hosted LaTeX editor
 description: >-
   Overleaf (Community Edition) is a powerful self-hosted, collaborative online LaTeX editor designed to make scientific, academic, and technical writing seamless. Author papers, thesis projects, and presentations with real-time compilation, dual editing modes, and direct local storage on your Umbrel.
@@ -30,17 +30,19 @@ description: >-
 
   ### 📦 TeX Live Packages & Extras
 
-  The Community Edition container ships with a minimal TeX Live installation for fast startup and low resource consumption. If your templates require additional packages (such as `babel-spanish`, `titlesec`, `amsmath`, or `scheme-full`):
+  The Community Edition container ships with a minimal TeX Live installation for fast startup and low resource consumption.
 
-  1. Open the app terminal in **Umbrel Settings > Terminal**, or run via SSH: `docker exec -it makrron-overleaf_server_1 bash`
+  This app includes an automated background hook (`hooks/post-start`) that automatically restores your required TeX Live packages whenever the app starts or updates:
 
-  2. Update the package manager: `tlmgr update --self`
+  - Packages listed in `data/texlive-packages.txt` (by default `babel-spanish`, `titlesec`, and common LaTeX collections) are automatically verified and installed in the background.
 
-  3. Install desired packages: `tlmgr install <package-name>` followed by `tlmgr path add`
+  - To add more packages permanently across any container update, simply add package names (one per line) to `data/texlive-packages.txt`.
 
-  *(Tip: To persist newly installed packages across container updates, commit the image with `docker commit makrron-overleaf_server_1 sharelatex/sharelatex:6.3.0`)*
+  - You can inspect installation progress anytime in `data/texlive-install.log`.
 releaseNotes: >-
-  This update adds support for new storage management options being introduced with umbrelOS 2.0.
+  - Added automated background post-start hook to ensure custom TeX Live packages (like babel-spanish and titlesec) are automatically restored and preserved across app updates.
+
+  - Added umbrelOS 2.0 storage management support (storage.dataRoot: data).
 
 
   Previous Overleaf 6.3.0 release notes:
