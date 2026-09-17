@@ -9,16 +9,15 @@ DATA_ROOT="${APP_DATA_ROOT:-${APP_DIR}/data}"
 PACKAGES_FILE="${DATA_ROOT}/texlive-packages.txt"
 LOG_FILE="${DATA_ROOT}/texlive-install.log"
 
-# Default packages to ensure common templates (spanish, titlesec, etc.) work out of the box
-if [[ ! -f "${PACKAGES_FILE}" ]]; then
-	cat << 'EOF' > "${PACKAGES_FILE}"
-babel-spanish
-titlesec
-collection-latexrecommended
-collection-latexextra
-collection-langspanish
-EOF
-fi
+# Ensure default essential packages exist in PACKAGES_FILE even if it was previously created
+mkdir -p "${DATA_ROOT}"
+touch "${PACKAGES_FILE}"
+
+for def_pkg in babel-spanish hyphen-spanish titlesec verse collection-latexrecommended collection-fontsrecommended; do
+	if ! grep -Fxq "${def_pkg}" "${PACKAGES_FILE}" 2>/dev/null; then
+		echo "${def_pkg}" >> "${PACKAGES_FILE}"
+	fi
+done
 
 # Detect running server container (supports Compose v1 and v2 naming conventions)
 CONTAINER_NAME="$(docker ps --filter "name=makrron-overleaf.*server" --format "{{.Names}}" | head -n 1)"
@@ -64,14 +63,20 @@ install_packages() {
 	echo "[$(date '+%Y-%m-%d %H:%M:%S')] Missing packages detected: ${missing_pkgs[*]}. Updating tlmgr..." >> "${log}"
 	docker exec "${container}" tlmgr update --self >> "${log}" 2>&1 || true
 
-	for pkg in "${missing_pkgs[@]}"; do
-		echo "[$(date '+%Y-%m-%d %H:%M:%S')] Installing ${pkg}..." >> "${log}"
-		if docker exec "${container}" tlmgr install "${pkg}" >> "${log}" 2>&1; then
-			echo "[$(date '+%Y-%m-%d %H:%M:%S')] Successfully installed ${pkg}" >> "${log}"
-		else
-			echo "[$(date '+%Y-%m-%d %H:%M:%S')] Warning: Failed to install ${pkg}" >> "${log}"
-		fi
-	done
+	echo "[$(date '+%Y-%m-%d %H:%M:%S')] Installing missing packages: ${missing_pkgs[*]}..." >> "${log}"
+	if docker exec "${container}" tlmgr install "${missing_pkgs[@]}" >> "${log}" 2>&1; then
+		echo "[$(date '+%Y-%m-%d %H:%M:%S')] Successfully installed packages: ${missing_pkgs[*]}" >> "${log}"
+	else
+		echo "[$(date '+%Y-%m-%d %H:%M:%S')] Batch installation had issues; falling back to individual installs..." >> "${log}"
+		for pkg in "${missing_pkgs[@]}"; do
+			echo "[$(date '+%Y-%m-%d %H:%M:%S')] Installing ${pkg}..." >> "${log}"
+			if docker exec "${container}" tlmgr install "${pkg}" >> "${log}" 2>&1; then
+				echo "[$(date '+%Y-%m-%d %H:%M:%S')] Successfully installed ${pkg}" >> "${log}"
+			else
+				echo "[$(date '+%Y-%m-%d %H:%M:%S')] Warning: Failed to install ${pkg}" >> "${log}"
+			fi
+		done
+	fi
 
 	echo "[$(date '+%Y-%m-%d %H:%M:%S')] Refreshing TeX Live paths and font maps..." >> "${log}"
 	docker exec "${container}" tlmgr path add >> "${log}" 2>&1 || true

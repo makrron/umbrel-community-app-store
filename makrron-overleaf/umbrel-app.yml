@@ -4,7 +4,7 @@ storage:
   dataRoot: data
 category: developer
 name: Overleaf
-version: "6.3.0-patch.3"
+version: "6.3.0-patch.4"
 tagline: Collaborative self-hosted LaTeX editor
 description: >-
   Overleaf (Community Edition) is a powerful self-hosted, collaborative online LaTeX editor designed to make scientific, academic, and technical writing seamless. Author papers, thesis projects, and presentations with real-time compilation, dual editing modes, and direct local storage on your Umbrel.
