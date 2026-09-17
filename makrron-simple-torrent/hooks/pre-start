@@ -5,8 +5,9 @@ set -euo pipefail
 # the local downloads folder for existing installations
 # to Umbrel's shared downloads folder
 
-APP_DATA_DIR="$(readlink -f $(dirname "${BASH_SOURCE[0]}")/..)"
-UMBREL_ROOT="${APP_DATA_DIR}/../.."
+APP_DIR="$(readlink -f "$(dirname "${BASH_SOURCE[0]}")/..")"
+DATA_ROOT="${APP_DATA_ROOT:-${APP_DIR}/data}"
+UMBREL_ROOT="${UMBREL_ROOT:-${APP_DIR}/../..}"
 
 # We need to ensure Umbrel's shared download folder
 # exists and is owned by the correct user
@@ -36,7 +37,7 @@ simpletorrent_correct_permission "${UMBREL_DATA_STORAGE_DIR}"
 simpletorrent_correct_permission "${UMBREL_DATA_STORAGE_DOWNLOADS_DIR}"
 
 # Migrate existing installations to use the shared downloads directory
-LOCAL_DOWNLOADS_DIR="${APP_DATA_DIR}/data/downloads"
+LOCAL_DOWNLOADS_DIR="${DATA_ROOT}/downloads"
 
 if [[ ! -d "${LOCAL_DOWNLOADS_DIR}" ]]; then
 	echo "No local downloads directory found. Skipping migration..."

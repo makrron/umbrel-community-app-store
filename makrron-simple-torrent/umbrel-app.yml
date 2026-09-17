@@ -1,8 +1,10 @@
 manifestVersion: 1.1
 id: makrron-simple-torrent
+storage:
+  dataRoot: data
 category: networking
 name: SimpleTorrent
-version: "1.4.0"
+version: "1.4.0-patch.1"
 tagline: Download torrents with your Umbrel
 description: >-
   SimpleTorrent is a self-hosted remote torrent client that starts
@@ -32,14 +34,17 @@ description: >-
 
   ⚠️ SimpleTorrent downloads torrents over the Clearnet, not Tor.
 releaseNotes: >-
-  - Upgraded SimpleTorrent to v1.4.0 with modernized Go engine and native multi-arch container support.
+  This update adds support for new storage management options being introduced with umbrelOS 2.0.
 
+
+  Previous SimpleTorrent 1.4.0 release notes:
+
+
+  - Upgraded SimpleTorrent to v1.4.0 with modernized Go engine and native multi-arch container support.
 
   - Overhauled built-in torrent search engine with modular providers, automatic mirror failovers, and updated scrapers (YTS, 1337X, The Pirate Bay, LimeTorrents, Nyaa, TorrentGalaxy, and more).
 
-
   - Added clearer error feedback and transparent logging for upstream provider status.
-
 
   - Full release notes: https://github.com/makrron/simple-torrent/releases/tag/v1.4.0
 developer: Preston & makrron
