@@ -4,7 +4,7 @@ storage:
   dataRoot: data
 category: developer
 name: Overleaf
-version: "6.3.0-patch.2"
+version: "6.3.0-patch.3"
 tagline: Collaborative self-hosted LaTeX editor
 description: >-
   Overleaf (Community Edition) is a powerful self-hosted, collaborative online LaTeX editor designed to make scientific, academic, and technical writing seamless. Author papers, thesis projects, and presentations with real-time compilation, dual editing modes, and direct local storage on your Umbrel.
@@ -40,6 +40,8 @@ description: >-
 
   - You can inspect installation progress anytime in `data/texlive-install.log`.
 releaseNotes: >-
+  - Switched to multi-architecture image (ghcr.io/makrron/overleaf:6.3.0) with native support for both ARM64 (Raspberry Pi 4/5, Umbrel Home) and x86_64 servers.
+
   - Added automated background post-start hook to ensure custom TeX Live packages (like babel-spanish and titlesec) are automatically restored and preserved across app updates.
 
   - Added umbrelOS 2.0 storage management support (storage.dataRoot: data).
