@@ -1,8 +1,10 @@
 manifestVersion: 1.1
 id: makrron-overleaf
+storage:
+  dataRoot: data
 category: developer
 name: Overleaf
-version: "6.3.0"
+version: "6.3.0-patch.1"
 tagline: Collaborative self-hosted LaTeX editor
 description: >-
   Overleaf (Community Edition) is a powerful self-hosted, collaborative online LaTeX editor designed to make scientific, academic, and technical writing seamless. Author papers, thesis projects, and presentations with real-time compilation, dual editing modes, and direct local storage on your Umbrel.
@@ -38,6 +40,12 @@ description: >-
 
   *(Tip: To persist newly installed packages across container updates, commit the image with `docker commit makrron-overleaf_server_1 sharelatex/sharelatex:6.3.0`)*
 releaseNotes: >-
+  This update adds support for new storage management options being introduced with umbrelOS 2.0.
+
+
+  Previous Overleaf 6.3.0 release notes:
+
+
   - Overleaf Community Edition v6.3.0 on Umbrel.
 
   - Modernized app icon with official Overleaf branding, solid background, and balanced geometry.
